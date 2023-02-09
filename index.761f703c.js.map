@@ -1,0 +1,1 @@
+{"mappings":"AAEAA,MAAM","sources":["src/index.js"],"sourcesContent":["import './css/styles.css';\n\nalert(\"It works!\");"],"names":["alert"],"version":3,"file":"index.761f703c.js.map"}
