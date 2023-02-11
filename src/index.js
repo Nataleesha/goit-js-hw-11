@@ -1,4 +1,6 @@
 import './css/styles.css';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { searchImages } from './js/api';
 import { createImageCard } from './js/image-card';
@@ -11,6 +13,8 @@ let searchValue = '';
 let images = [];
 let totalImages = 0;
 let page = 1;
+
+let lightbox = new SimpleLightbox('.large-image');
 
 searchForm.addEventListener('submit', onSearch);
 
@@ -55,6 +59,7 @@ async function onLoadMore() {
   const response = await searchImages(searchValue, page);
   images = response.data.hits;
   renderImages(images);
+
   if (totalImages <= 40) {
     loadBtn.hidden = true;
     loadBtn.removeEventListener('click', onLoadMore);
@@ -67,4 +72,13 @@ function renderImages(array) {
   for (const item of array) {
     gallery.insertAdjacentHTML('beforeend', createImageCard(item));
   }
+  lightbox.refresh();
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }

@@ -1,6 +1,9 @@
 export function createImageCard(image) {
-  return `<div class="photo-card">
+  return `<a href="${image.largeImageURL}" class="large-image">
+  <div class="photo-card">
+  <div class="image-container">
   <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+  </div>
   <div class="info">
     <p class="info-item">
       <b>Likes</b><br>
@@ -19,5 +22,6 @@ export function createImageCard(image) {
       ${image.downloads}
     </p>
   </div>
-</div>`;
+</div>
+</a>`;
 }
