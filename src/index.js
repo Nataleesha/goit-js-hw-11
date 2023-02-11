@@ -1,34 +1,57 @@
 import './css/styles.css';
-import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
-const API_KEY = '33519998-d8f719b1763760ac30c0941da';
-const BASE_URL = 'https://pixabay.com/api/';
+import { searchImages } from './js/api';
+import { createImageCard } from './js/image-card';
 
 const searchForm = document.querySelector('.search-form');
 const input = document.querySelector('[name="searchQuery"]');
+const gallery = document.querySelector('.gallery');
+const loadBtn = document.querySelector('.load-more');
+let page = 1;
 
 searchForm.addEventListener('submit', onSearch);
 
 async function onSearch(event) {
   event.preventDefault();
+
+  loadBtn.hidden = true;
+  page = 1;
+  gallery.innerHTML = '';
   let searchValue = input.value.trim();
+
   if (searchValue === '') {
     return;
   }
-  try {
-    const response = await axios.get(
-      `${BASE_URL}?key=${API_KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true`
+
+  const response = await searchImages(searchValue, page);
+  let totalImages = response.data.totalHits;
+  const images = response.data.hits;
+
+  if (images.length === 0) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
     );
-    if (response.data.hits.length === 0) {
-      Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-      input.value = '';
+    input.value = '';
+  } else {
+    renderImages(images);
+
+    totalImages -= 40;
+
+    if (totalImages >= 40) {
+      loadBtn.hidden = false;
+      loadBtn.addEventListener('click', () => {
+        page += 1;
+        searchImages(searchValue, page);
+        renderImages(images);
+      });
+    } else {
+      Notify.info("We're sorry, but you've reached the end of search results.");
     }
-    console.log(response.data.hits);
-  } catch (error) {
-    console.error(error);
   }
 }
 
+function renderImages(array) {
+  for (const item of array) {
+    gallery.insertAdjacentHTML('beforeend', createImageCard(item));
+  }
+}
