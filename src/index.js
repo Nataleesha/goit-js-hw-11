@@ -43,7 +43,7 @@ async function onSearch(event) {
 
     renderImages(images);
 
-    if (totalImages >= 40) {
+    if (totalImages > 40) {
       loadBtn.hidden = false;
       loadBtn.addEventListener('click', onLoadMore);
     } else {
