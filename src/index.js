@@ -22,6 +22,7 @@ async function onSearch(event) {
   event.preventDefault();
   loadBtn.hidden = true;
   gallery.innerHTML = '';
+  page = 1;
   searchValue = input.value.trim();
 
   if (searchValue === '') {
