@@ -1,15 +1,15 @@
 {
-  "name": "goit-js-hw-11",
+  "name": "image-search",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://nataleesha.github.io/goit-js-hw-11",
+  "homepage": "https://nataleesha.github.io/image-search",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /goit-js-hw-11/"
+    "build": "parcel build src/*.html --public-url /image-search/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nataleesha/goit-js-hw-11.git"
+    "url": "git+https://github.com/Nataleesha/image-search.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
